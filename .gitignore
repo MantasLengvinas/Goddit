@@ -1,0 +1,16 @@
+// ---- API PART ----
+// subfolders in db/
+Api/db/extensions
+Api/db/raft
+Api/db/rsnapshots
+
+// files in db/
+Api/db/db.sqlite
+Api/db/db.sqlite-shm
+Api/db/db.sqlite-wal
+Api/db/raft.db
+
+// ---- APP PART ----
+App/.svelte-kit
+App/node_modules
+App/project.inlang/cache
