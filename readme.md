@@ -1,11 +1,15 @@
 # Quick start
 
+## Start the DB
 rqlited -node-id=1 db/
 
+## Start the migration (from API folder)
 migrate -path db/migrations -database "rqlite://localhost:4001?x-connect-insecure=true" up
 
-go run connector.go
+## Start the API (from API folder)
+go run main.go
 
+## Start app (from APP folder)
 npm run dev
 
 # Toolchain needed
