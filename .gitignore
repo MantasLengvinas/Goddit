@@ -1,9 +1,15 @@
 # API
 
 # DB migrations and code
-db/*
-!db/migrations/*.sql
-!db/*.go
+db/extensions/
+db/raft/
+db/rsnapshots/
+
+*.db
+db.sqlite
+db.sqlite-shm
+db.sqlite-wal
+raft.db
 
 
 # APP
