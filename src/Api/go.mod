@@ -1,4 +1,4 @@
-module example/hello
+module Goddit
 
 go 1.24.1
 
