@@ -1,7 +1,7 @@
 package routes
 
 import (
-	repository "Goddit/data"
+	posts "Goddit/services/posts"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,12 +11,12 @@ import (
 func InitPostsRoutes(db *gorqlite.Connection, router *gin.Engine) {
 
 	// This is initial routing. We should create the high level architecture of routing and divide in logical blocks (groups)
-
+	repo := posts.InitPostRepository(db)
 	r := router.Group("/v1/posts")
 
 	// GET /v1/posts -> return all, index
 	r.GET("", func(ctx *gin.Context) {
-		posts := repository.GetAllPosts(db, ctx)
+		posts := repo.GetAllPosts(ctx)
 
 		ctx.JSON(http.StatusOK, posts)
 	})
@@ -25,7 +25,7 @@ func InitPostsRoutes(db *gorqlite.Connection, router *gin.Engine) {
 	r.GET("/:id", func(ctx *gin.Context) {
 		// currently id is understood as string, not sure if should be cast down to int later for cohesion
 		id := ctx.Param("id")
-		post := repository.GetPost(db, ctx, id)
+		post := repo.GetPost(ctx, id)
 
 		ctx.JSON(http.StatusOK, post)
 	})
