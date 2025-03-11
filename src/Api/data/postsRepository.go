@@ -1,14 +1,22 @@
 package data
 
 import (
+	"context"
 	"log"
 
-	"github.com/gin-gonic/gin"
 	"github.com/rqlite/gorqlite"
 )
 
-func GetAllPosts(db *gorqlite.Connection, ctx *gin.Context) []map[string]any {
-	results, err := db.QueryOne("SELECT * FROM posts")
+type PostRepository struct {
+	db *gorqlite.Connection
+}
+
+func InitPostRepository(db *gorqlite.Connection) *PostRepository {
+	return &PostRepository{db: db}
+}
+
+func (repo *PostRepository) GetAllPosts(ctx context.Context) []map[string]any {
+	results, err := repo.db.QueryOne("SELECT * FROM posts")
 	if err != nil {
 		log.Printf("Query error")
 		return nil
@@ -26,9 +34,9 @@ func GetAllPosts(db *gorqlite.Connection, ctx *gin.Context) []map[string]any {
 	return posts
 }
 
-func GetPost(db *gorqlite.Connection, ctx *gin.Context, id string) map[string]any {
+func (repo *PostRepository) GetPost(ctx context.Context, id string) map[string]any {
 	// queury parametrized to avoid sql injection
-	results, err := db.QueryParameterized([]gorqlite.ParameterizedStatement{
+	results, err := repo.db.QueryParameterized([]gorqlite.ParameterizedStatement{
 		{
 			Query: "SELECT * FROM posts WHERE id = ? LIMIT 1",
 			Arguments: []any { id },
