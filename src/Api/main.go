@@ -15,7 +15,6 @@ func main() {
 	if err != nil {
 		return
 	}
-
 	router := gin.Default()
 	routes.InitPostsRoutes(conn, router)
 
